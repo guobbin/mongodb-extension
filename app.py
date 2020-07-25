@@ -20,11 +20,13 @@ app.jinja_env.globals['current_time'] = datetime.datetime.now()
 
 
 MONGO_DBNAME = os.getenv("MONGO_DBNAME")
+MONGO_DBNAME = os.getenv("gbb")
 MONGO_DB_USERNAME = os.getenv("MONGO_DB_USERNAME")
 MONGO_DB_PASSWORD = os.getenv("MONGO_DB_PASSWORD")
 
 app.config['MONGO_DBNAME'] = MONGO_DBNAME
-app.config['MONGO_URI'] = f'mongodb+srv://{MONGO_DB_USERNAME}:{MONGO_DB_PASSWORD}@cluster0.94cb3.mongodb.net/{MONGO_DBNAME}?retryWrites=true'
+# app.config['MONGO_URI'] = f'mongodb+srv://{MONGO_DB_USERNAME}:{MONGO_DB_PASSWORD}@cluster0.94cb3.mongodb.net/{MONGO_DBNAME}?retryWrites=true'
+app.config['MONGO_URI'] = f'mongodb://localhost:27017/{MONGO_DBNAME}?retryWrites=true'
 
 mongo = PyMongo(app)
 
@@ -130,3 +132,5 @@ def reviews_add():
         return render_template('reviewsDetail.html', data=data)
 
 #### Add new routes below this line ###
+if __name__=='__main__':
+    app.run(debug=True)
