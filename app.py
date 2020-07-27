@@ -131,6 +131,7 @@ def reviews_add():
         mongo.db.reviews.insert(review)
         return render_template('reviewsDetail.html', data=data)
 
+
 #### Add new routes below this line ###
 if __name__=='__main__':
     app.run(debug=True)
