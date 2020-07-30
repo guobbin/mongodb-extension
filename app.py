@@ -20,7 +20,7 @@ app.jinja_env.globals['current_time'] = datetime.datetime.now()
 
 
 MONGO_DBNAME = os.getenv("MONGO_DBNAME")
-MONGO_DBNAME = os.getenv("gbb")
+MONGO_DBNAME = "gbb"
 MONGO_DB_USERNAME = os.getenv("MONGO_DB_USERNAME")
 MONGO_DB_PASSWORD = os.getenv("MONGO_DB_PASSWORD")
 
@@ -32,12 +32,14 @@ mongo = PyMongo(app)
 
 # -- Routes section --
 
+
 @app.route('/')
 @app.route('/index')
 def index():
     data = {
     }
     return render_template('index.html', data=data)
+
 
 @app.route('/users')
 def users_view():
@@ -46,6 +48,7 @@ def users_view():
     }
     return render_template('usersView.html', data=data)
 
+
 @app.route('/users/<USER>')
 def users_detail(USER):
     data = {
@@ -53,6 +56,7 @@ def users_detail(USER):
     'reviews':mongo.db.reviews.find({'user':USER}),
     }
     return render_template('usersDetail.html', data=data)
+
 
 @app.route('/users/add', methods=['GET','POST'])
 def users_add():
@@ -68,6 +72,7 @@ def users_add():
         mongo.db.users.insert(user)
         return redirect(url_for('users_view'))
 
+
 @app.route('/books')
 def books_view():
     data = {
@@ -82,6 +87,7 @@ def books_detail(title):
     'reviews':mongo.db.reviews.find({'title':title}),
     }
     return render_template('booksDetail.html', data=data)
+
 
 @app.route('/books/add', methods=['GET','POST'])
 def books_add():
@@ -102,12 +108,14 @@ def books_add():
         mongo.db.books.insert(book)
         return render_template('booksDetail.html', data=data)
 
+
 @app.route('/reviews')
 def reviews_view():
     data = {
     'reviews':mongo.db.reviews.find({}),
     }
     return render_template('reviewsView.html', data=data)
+
 
 @app.route('/review/add', methods=['GET','POST'])
 def reviews_add():
